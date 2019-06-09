@@ -1,6 +1,4 @@
-
 from cffi import FFI
-from config import *
 ffibuilder = FFI()
 
 ffibuilder.cdef("""
@@ -20,11 +18,16 @@ typedef struct {
 TSParser* ts_parser_new();
 
 bool ts_parser_set_language(TSParser *self, const TSLanguage *language);
-extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_bash(void);
 extern const TSLanguage *tree_sitter_c(void);
 extern const TSLanguage *tree_sitter_cpp(void);
-extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_go(void);
+extern const TSLanguage *tree_sitter_javascript(void);
 extern const TSLanguage *tree_sitter_json(void);
+extern const TSLanguage *tree_sitter_lua(void);
+extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_typescript(void);
 
 TSTree *ts_parser_parse_string(
   TSParser *self,
@@ -69,14 +72,19 @@ ffibuilder.set_source("_tree_sitter",  # name of the output C extension
 #include <stdio.h>
 #include <tree_sitter/api.h>
 
-extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_bash(void);
 extern const TSLanguage *tree_sitter_c(void);
 extern const TSLanguage *tree_sitter_cpp(void);
-extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_go(void);
+extern const TSLanguage *tree_sitter_javascript(void);
 extern const TSLanguage *tree_sitter_json(void);
+extern const TSLanguage *tree_sitter_lua(void);
+extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_typescript(void);
 
 """,
-                      sources=cfii_sources,
+                      sources=['vendor/tree-sitter/lib/src/lib.c'],
                       include_dirs=['vendor/tree-sitter/lib/src',
                                     'vendor/tree-sitter/lib/include',
                                     'vendor/tree-sitter/lib/utf8proc',

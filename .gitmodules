@@ -13,3 +13,21 @@
 [submodule "vendor/tree-sitter-rust"]
 	path = vendor/tree-sitter-rust
 	url = https://github.com/tree-sitter/tree-sitter-rust
+[submodule "vendor/tree-sitter-cpp"]
+	path = vendor/tree-sitter-cpp
+	url = https://github.com/tree-sitter/tree-sitter-cpp
+[submodule "vendor/tree-sitter-go"]
+	path = vendor/tree-sitter-go
+	url = https://github.com/tree-sitter/tree-sitter-go
+[submodule "vendor/tree-sitter-lua"]
+	path = vendor/tree-sitter-lua
+	url = https://github.com/Azganoth/tree-sitter-lua
+[submodule "vendor/tree-sitter-typescript"]
+	path = vendor/tree-sitter-typescript
+	url = https://github.com/tree-sitter/tree-sitter-typescript
+[submodule "vendor/tree-sitter-javascript"]
+	path = vendor/tree-sitter-javascript
+	url = https://github.com/tree-sitter/tree-sitter-javascript
+[submodule "vendor/tree-sitter-bash"]
+	path = vendor/tree-sitter-bash
+	url = https://github.com/tree-sitter/tree-sitter-bash

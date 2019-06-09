@@ -1,6 +1,5 @@
 import platform
 import os.path as path
-from tree_sitter_binding import Parser
 from tempfile import TemporaryDirectory
 from distutils.ccompiler import new_compiler
 from ctypes.util import find_library
@@ -62,8 +61,8 @@ class Language:
                         extra_preargs=flags,
                         debug=False
                     )[0])
-                compiler.link_shared_object(object_paths, output_path)
-                #compiler.create_static_lib(object_paths, 'treesitterparser', 'libs')
+                #compiler.link_shared_object(object_paths, output_path)
+                compiler.create_static_lib(object_paths, 'treesitterparser', 'libs')
                 # using static lib instead of dynamic
             return True
         else:
@@ -83,11 +82,17 @@ class Language:
 
 def build_libs():
     Language.build_library('libs/treesitterparser.dll',
-                           ['vendor/tree-sitter-python',
+                           ['vendor/tree-sitter-bash',
                             'vendor/tree-sitter-c',
                             'vendor/tree-sitter-cpp',
+                            'vendor/tree-sitter-go',
+                            'vendor/tree-sitter-lua',
+                            'vendor/tree-sitter-javascript',
+                            'vendor/tree-sitter-json',
+                            'vendor/tree-sitter-lua',
+                            'vendor/tree-sitter-python',
                             'vendor/tree-sitter-rust',
-                            'vendor/tree-sitter-json'],)
+                            'vendor/tree-sitter-typescript/typescript'],)
 
 if __name__ == "__main__":
     build_libs()
