@@ -1,4 +1,6 @@
+
 from cffi import FFI
+from config import *
 ffibuilder = FFI()
 
 ffibuilder.cdef("""
@@ -15,12 +17,15 @@ typedef struct {
   uint32_t column;
 } TSPoint;
 
-uint32_t test();
 TSParser* ts_parser_new();
-TSLanguage* tree_sitter_json();
-TSLanguage* tree_sitter_python();
 
 bool ts_parser_set_language(TSParser *self, const TSLanguage *language);
+extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_c(void);
+extern const TSLanguage *tree_sitter_cpp(void);
+extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_json(void);
+
 TSTree *ts_parser_parse_string(
   TSParser *self,
   const TSTree *old_tree,
@@ -58,27 +63,33 @@ bool ts_node_is_null(TSNode);
 """)
 
 ffibuilder.set_source("_tree_sitter",  # name of the output C extension
-"""
+                      """
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
 #include <tree_sitter/api.h>
-#include <tree_sitter/parser.h>
 
-TSLanguage *tree_sitter_json();
-
-uint32_t test() {
-        TSParser *parser = ts_parser_new();
-        ts_parser_set_language(parser, tree_sitter_json());
-        return tree_sitter_json();
-}
+extern const TSLanguage *tree_sitter_python(void);
+extern const TSLanguage *tree_sitter_c(void);
+extern const TSLanguage *tree_sitter_cpp(void);
+extern const TSLanguage *tree_sitter_rust(void);
+extern const TSLanguage *tree_sitter_json(void);
 
 """,
-        sources=['vendor/tree-sitter/lib/src/lib.c', 
-        'vendor/tree-sitter-json/src/parser.c'],   # includes pi.c as additional sources
-        include_dirs=['vendor/tree-sitter/lib/src', 'vendor/tree-sitter/lib/include', 
-        'vendor/tree-sitter/lib/utf8proc'],
-        libraries=[])    # on Unix, link with the math library
+                      sources=cfii_sources,
+                      include_dirs=['vendor/tree-sitter/lib/src',
+                                    'vendor/tree-sitter/lib/include',
+                                    'vendor/tree-sitter/lib/utf8proc',
+                                    ],
+                      library_dirs=['libs'],
+                      libraries=['treesitterparser']
+
+                      )
+
+
+
+
 
 if __name__ == "__main__":
-    ffibuilder.compile(verbose=True)
+    #build_libs()
+    ffibuilder.compile(verbose=True, debug=False)
