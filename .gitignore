@@ -132,3 +132,5 @@ dmypy.json
 Release/
 _*.c
 .vscode/
+*.pdb
+*.pyd
