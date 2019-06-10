@@ -1,11 +1,10 @@
-from collections import namedtuple
 from _treesitter2.lib import (
     ts_tree_root_node, ts_tree_delete,
     ts_tree_edit
 )
 from _treesitter2 import ffi
-from treesitter2.node import Node
-Point = namedtuple('Point', ['row', 'column'])
+from treesitter2.node import Node, Point
+
 
 class Tree(object):
     """docstring for Tree"""
@@ -42,7 +41,7 @@ class Tree(object):
         ts_input_edit.new_end_point.row = new_end_point.row
         ts_input_edit.new_end_point.column = new_end_point.column
 
-        ts_tree_edit(self._cnode, ts_input_edit)
+        ts_tree_edit(self._ctree, ts_input_edit)
 
     def __del__(self):
         if self._ctree is not None and self._ctree is not ffi.NULL:

@@ -25,7 +25,7 @@ class Parser(object):
         else:
             ctree = ts_parser_parse_string(self._cparser, ffi.NULL,
                                            string, len(string))
-            return Tree(ctree)
+        return Tree(ctree)
 
     def __del__(self):
         ts_parser_delete(self._cparser)
