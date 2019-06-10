@@ -104,7 +104,7 @@ class CustomDevelopCommand(develop):
         develop.run(self)
 
 setup(
-    name="TreeSitter2",
+    name="treesitter2",
     version="0.1",
     packages=find_packages(),
     cmdclass={
@@ -115,4 +115,6 @@ setup(
     cffi_modules=["treesitter2/builder.py:ffibuilder"],
     author="Jing",    
     author_email="lhchenjw@gmail.com",
+    license="MIT Lisence"
+
 )
