@@ -10,7 +10,7 @@ Point = namedtuple('Point', ['row', 'column'])
 class Tree(object):
     """docstring for Tree"""
     def __init__(self, ctree):
-        super(Tree, self).__init__(self)
+        super(Tree, self).__init__()
         self._ctree = ctree
 
     @property
@@ -46,4 +46,4 @@ class Tree(object):
 
     def __del__(self):
         if self._ctree is not None and self._ctree is not ffi.NULL:
-            ts_tree_delete(self._cnode)
+            ts_tree_delete(self._ctree)
