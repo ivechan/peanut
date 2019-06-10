@@ -63,7 +63,7 @@ class Node(object):
 
     @property
     def sexp(self):
-        return ffi.string(ts_node_string(self._cnode))
+        return ffi.string(ts_node_string(self._cnode)).decode('utf-8')
 
     @property
     def children(self):
