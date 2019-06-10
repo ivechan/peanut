@@ -1,4 +1,4 @@
-from treesitter2.Language import (BashLanguage, CLanguage, CppLanguage,
+from treesitter2.language import (BashLanguage, CLanguage, CppLanguage,
                                   GoLanguage, JavascriptLanguage,
                                   JsonLanguage, LuaLanguage,
                                   PythonLanguage, RustLanguage,
