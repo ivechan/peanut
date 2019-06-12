@@ -7,7 +7,8 @@ import os.path as path
 from tempfile import TemporaryDirectory
 from distutils.ccompiler import new_compiler
 from ctypes.util import find_library
-from ctypes import cdll, c_void_p
+
+
 class Language:
     @staticmethod
     def build_library(output_dir, library_name, repo_paths):
@@ -19,7 +20,6 @@ class Language:
         the library already existed and was modified more recently than
         any of the source files.
         """
-
 
         if len(repo_paths) == 0:
             raise ValueError('Must provide at least one language folder')
@@ -58,9 +58,11 @@ class Language:
                     extra_preargs=flags,
                     debug=False
                 )[0])
-            #compiler.link_shared_object(object_paths, output_path)
-            compiler.create_static_lib(object_paths, 'treesitterparser', 'libs')
-                # using static lib instead of dynamic
+            # compiler.link_shared_object(object_paths, output_path)
+            # using static lib instead of dynamic
+            compiler.create_static_lib(object_paths,
+                                       'treesitterparser',
+                                       'libs')
             return True
 
     # def __init__(self, library_path, name):
@@ -76,7 +78,7 @@ class Language:
 
 
 def build_libs():
-    Language.build_library('libs','treesitterparser',
+    Language.build_library('libs', 'treesitterparser',
                            ['vendor/tree-sitter-bash',
                             'vendor/tree-sitter-c',
                             'vendor/tree-sitter-cpp',
@@ -89,12 +91,14 @@ def build_libs():
                             'vendor/tree-sitter-rust',
                             'vendor/tree-sitter-typescript/typescript'],)
 
+
 class CustomInstallCommand(install):
     """Customized setuptools install command - prints a friendly greeting."""
     def run(self):
         print("Hello, developer, how are you? :)")
         build_libs()
         install.run(self)
+
 
 class CustomDevelopCommand(develop):
     """Customized setuptools install command - prints a friendly greeting."""
@@ -103,17 +107,19 @@ class CustomDevelopCommand(develop):
         build_libs()
         develop.run(self)
 
+
 setup(
     name="treesitter2",
     version="0.1",
     packages=find_packages(),
     cmdclass={
-    'install': CustomInstallCommand,
-    'develop': CustomDevelopCommand
+        'install': CustomInstallCommand,
+        'develop': CustomDevelopCommand
     },
     setup_requires=["cffi>=1.0.0"],
+    install_requires=["cffi>=1.0.0"],
     cffi_modules=["treesitter2/builder.py:ffibuilder"],
-    author="Jing",    
+    author="Jing",
     author_email="lhchenjw@gmail.com",
     license="MIT Lisence"
 
