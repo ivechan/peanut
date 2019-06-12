@@ -1,4 +1,13 @@
 from cffi import FFI
+from ctypes.util import find_library
+
+extra_link_args = None
+if find_library('stdc++'):
+    extra_link_args = ['-lstdc++', ]
+else:
+    raise Warning('Can not find c++ standard library!!!')
+
+
 ffibuilder = FFI()
 
 ffibuilder.cdef("""
@@ -209,8 +218,8 @@ extern const TSLanguage *tree_sitter_typescript(void);
                                     'vendor/tree-sitter/lib/utf8proc',
                                     ],
                       library_dirs=['libs'],
-                      libraries=['treesitterparser']
-
+                      libraries=['treesitterparser'],
+                      extra_link_args=extra_link_args,
                       )
 
 
